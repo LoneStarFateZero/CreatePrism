@@ -10,6 +10,7 @@ import com.simibubi.create.AllTags;
 import com.simibubi.create.content.decoration.MetalScaffoldingBlock;
 import com.simibubi.create.content.decoration.MetalScaffoldingBlockItem;
 import com.simibubi.create.content.decoration.MetalScaffoldingCTBehaviour;
+import com.simibubi.create.content.decoration.encasing.EncasingRegistry;
 import com.simibubi.create.content.decoration.palettes.AllPaletteBlocks;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.simibubi.create.foundation.block.connected.SimpleCTBehaviour;
@@ -31,6 +32,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 
 import static com.simibubi.create.foundation.data.BlockStateGen.axisBlock;
+import static com.simibubi.create.foundation.data.CreateRegistrate.casingConnectivity;
 import static com.simibubi.create.foundation.data.CreateRegistrate.connectedTextures;
 import static com.simibubi.create.foundation.data.TagGen.pickaxeOnly;
 
@@ -50,6 +52,7 @@ public class GlassBlockBuilders {
                 .addLayer(() -> RenderType::cutout)
                 .blockstate((c, p) -> p.simpleBlock(c.get()))
                 .onRegister(connectedTextures(() -> new SimpleCTBehaviour(ctEntry)))
+                .onRegister(casingConnectivity((block, cc) -> cc.makeCasing(block, ctEntry))) // 添加这行
                 .tag(AllTags.AllBlockTags.CASING.tag)
                 .recipe((c, p) ->
                         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, c.get())
@@ -74,11 +77,11 @@ public class GlassBlockBuilders {
                 .initialProperties(() -> Blocks.GLASS)
                 .properties(BlockBehaviour.Properties::noOcclusion)
                 .properties(GlassBlockBuilders::glassProperties)
-                // 移除 BlockStressDefaults.setNoImpact()
+                .onRegister(block -> EncasingRegistry.addVariant(AllBlocks.SHAFT.get(), block))
                 .loot((p, lb) -> p.dropOther(lb, AllBlocks.SHAFT.get()))
                 .addLayer(() -> RenderType::cutout)
                 .onRegister(connectedTextures(() -> new GlassEncasedCTBehaviour(ctEntry)))
-                .onRegister(CreateRegistrate.casingConnectivity((block, cc) ->
+                .onRegister(casingConnectivity((block, cc) ->
                         cc.make(block, ctEntry, (state, face) -> true)))
                 .transform(pickaxeOnly())
                 .blockstate((ctx, prov) ->
@@ -107,11 +110,12 @@ public class GlassBlockBuilders {
                 .initialProperties(() -> Blocks.GLASS)
                 .properties(BlockBehaviour.Properties::noOcclusion)
                 .properties(GlassBlockBuilders::glassProperties)
-                // 移除 BlockStressDefaults.setNoImpact()
+                .onRegister(block -> EncasingRegistry.addVariant(
+                        large ? AllBlocks.LARGE_COGWHEEL.get() : AllBlocks.COGWHEEL.get(), block))
                 .loot((p, lb) -> p.dropOther(lb, large ? AllBlocks.LARGE_COGWHEEL.get() : AllBlocks.COGWHEEL.get()))
                 .addLayer(() -> RenderType::cutout)
                 .onRegister(connectedTextures(() -> getCogCTBehaviour(mainShift, casingType, large)))
-                .onRegister(CreateRegistrate.casingConnectivity((block, cc) ->
+                .onRegister(casingConnectivity((block, cc) ->
                         cc.make(block, mainShift, (state, f) ->
                                 state.getBlock() instanceof GlassEncasedCogwheel &&
                                         f.getAxis() == state.getValue(GlassEncasedCogwheel.AXIS) &&
