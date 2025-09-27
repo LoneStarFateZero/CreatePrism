@@ -1,0 +1,9 @@
+{
+  "parent": "prism:block/tube",
+  "textures": {
+    "all": "prism:block/neon_tube",
+    "particle": "prism:block/anvil",
+    "0": "prism:block/neon_tube"
+  },
+  "render_type": "translucent"
+}

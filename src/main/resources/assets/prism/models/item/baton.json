@@ -1,0 +1,11 @@
+{
+  "parent": "prism:item/baton_base",
+  "overrides": [
+    {
+      "predicate": {
+        "prism:selection_mode": 1
+      },
+      "model": "prism:item/baton_highlight"
+    }
+  ]
+}

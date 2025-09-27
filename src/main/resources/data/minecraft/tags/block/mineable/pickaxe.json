@@ -1,0 +1,18 @@
+{
+  "values": [
+    "prism:copper_tap",
+    "prism:andesite_glass_encased_shaft",
+    "prism:brass_glass_encased_shaft",
+    "prism:train_glass_encased_shaft",
+    "prism:andesite_clear_glass_encased_shaft",
+    "prism:brass_clear_glass_encased_shaft",
+    "prism:train_clear_glass_encased_shaft",
+    "prism:andesite_glass_scaffolding",
+    "prism:brass_glass_scaffolding",
+    "prism:copper_glass_scaffolding",
+    "prism:andesite_clear_glass_scaffolding",
+    "prism:brass_clear_glass_scaffolding",
+    "prism:copper_clear_glass_scaffolding"
+  ]
+}
+

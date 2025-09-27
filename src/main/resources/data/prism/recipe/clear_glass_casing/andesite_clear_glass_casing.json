@@ -1,0 +1,16 @@
+{
+  "type": "create:item_application",
+  "ingredients": [
+    {
+      "item": "create_prism:andesite_glass_casing"
+    },
+    {
+      "item": "minecraft:glass"
+    }
+  ],
+  "results": [
+    {
+      "item": "create_prism:andesite_clear_glass_casing"
+    }
+  ]
+}

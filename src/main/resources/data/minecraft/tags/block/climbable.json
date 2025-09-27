@@ -1,0 +1,11 @@
+{
+  "replace": false,
+  "values": [
+    "prism:andesite_glass_scaffolding",
+    "prism:brass_glass_scaffolding",
+    "prism:copper_glass_scaffolding",
+    "prism:andesite_clear_glass_scaffolding",
+    "prism:brass_clear_glass_scaffolding",
+    "prism:copper_clear_glass_scaffolding"
+  ]
+}

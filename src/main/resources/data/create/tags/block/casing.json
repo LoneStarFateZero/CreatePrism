@@ -1,0 +1,13 @@
+{
+  "replace": false,
+  "values": [
+    "prism:andesite_clear_glass_casing",
+    "prism:brass_clear_glass_casing",
+    "prism:copper_clear_glass_casing",
+    "prism:train_clear_glass_casing",
+    "prism:andesite_glass_casing",
+    "prism:brass_glass_casing",
+    "prism:copper_glass_casing",
+    "prism:train_glass_casing"
+  ]
+}

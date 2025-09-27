@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "name": "prism:copper_tap"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "prism:blocks/copper_tap"
+}
