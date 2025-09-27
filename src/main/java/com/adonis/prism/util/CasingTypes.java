@@ -26,6 +26,18 @@ public enum CasingTypes {
             createHolder("andesite", AllBlocks.ANDESITE_CASING),
             createHolder("brass", AllBlocks.BRASS_CASING),
             createHolder("train", AllBlocks.RAILWAY_CASING)
+    ),
+
+    ILLUMINATION_CASINGS(
+            createHolder("andesite", AllBlocks.ANDESITE_CASING),
+            createHolder("copper", AllBlocks.COPPER_CASING),
+            createHolder("train", AllBlocks.RAILWAY_CASING)
+    ),
+
+    ILLUMINATION_ENCASED(
+            createHolder("andesite", AllBlocks.ANDESITE_CASING),
+            createHolder("copper", AllBlocks.COPPER_CASING),
+            createHolder("train", AllBlocks.RAILWAY_CASING)
     );
 
     public final List<String> names = new ArrayList<>();
@@ -40,7 +52,6 @@ public enum CasingTypes {
         }
     }
 
-    // 辅助方法来创建CasingHolder，明确使用Supplier版本
     private static CasingHolder createHolder(String name, com.tterrag.registrate.util.entry.BlockEntry<? extends CasingBlock> entry) {
         return new CasingHolder(name, entry::get);
     }

@@ -2,6 +2,9 @@ package com.adonis.prism.registry.builders;
 
 import com.adonis.prism.CreatePrism;
 import com.adonis.prism.block.glass.*;
+import com.adonis.prism.block.illumination.*;
+import com.simibubi.create.foundation.data.CreateRegistrate;
+import net.minecraft.world.item.Items;
 import com.adonis.prism.registry.CPSpriteShifts;
 import com.adonis.prism.util.CasingHolder;
 import com.simibubi.create.AllBlocks;
@@ -65,6 +68,33 @@ public class GlassBlockBuilders {
                 .register();
     }
 
+    // Illumination Casing Builder
+    public static <T extends AbstractRegistrate<?>> BlockEntry<IlluminationCasing> illuminationCasing(
+            T reg, CasingHolder holder) {
+        String name = holder.name();
+        String newName = name + "_illumination_casing";
+        CTSpriteShiftEntry ctEntry = CPSpriteShifts.getIlluminationCasingShift(name);
+
+        return reg.block(newName, IlluminationCasing::new)
+                .initialProperties(() -> Blocks.GLOWSTONE)
+                .properties(p -> p.sound(SoundType.GLASS).noOcclusion().lightLevel(s -> 15))
+                .addLayer(() -> RenderType::cutout)
+                .blockstate((c, p) -> p.simpleBlock(c.get()))
+                .onRegister(connectedTextures(() -> new EncasedCTBehaviour(ctEntry)))
+                .onRegister(casingConnectivity((block, cc) -> cc.makeCasing(block, ctEntry)))
+                .tag(AllTags.AllBlockTags.CASING.tag)
+                .recipe((c, p) ->
+                        ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, c.get())
+                                .requires(holder.casing().get())
+                                .requires(Items.GLOWSTONE_DUST, 4)
+                                .unlockedBy("has_casing", RegistrateRecipeProvider.has(AllTags.AllItemTags.CASING.tag))
+                                .save(p, CreatePrism.asResource("crafting/illumination_casing/" + c.getName())))
+                .item()
+                .tag(AllTags.AllItemTags.CASING.tag)
+                .build()
+                .register();
+    }
+
     // Glass Encased Shaft Builder
     public static <T extends AbstractRegistrate<?>> BlockEntry<GlassEncasedShaft> glassEncasedShaft(
             T reg, String casing, boolean clear,
@@ -92,6 +122,39 @@ public class GlassBlockBuilders {
                 .model((ctx, prov) -> prov
                         .withExistingParent(ctx.getName(), CreatePrism.asResource("block/glass_encased_shaft/block"))
                         .texture("casing", CreatePrism.asResource("block/" + casing + (clear ? "_clear_glass" : "_glass") + "_casing"))
+                        .texture("opening", getOpening(casing)))
+                .build()
+                .register();
+    }
+
+    // Illumination Encased Shaft Builder
+    public static <T extends AbstractRegistrate<?>> BlockEntry<IlluminationEncasedShaft> illuminationEncasedShaft(
+            T reg, String casing,
+            NonNullFunction<BlockBehaviour.Properties, IlluminationEncasedShaft> factory) {
+        String newName = casing + "_illumination_encased_shaft";
+        CTSpriteShiftEntry ctEntry = CPSpriteShifts.getIlluminationCasingShift(casing);
+
+        return reg.block(newName, factory)
+                .initialProperties(() -> Blocks.GLOWSTONE)
+                .properties(BlockBehaviour.Properties::noOcclusion)
+                .properties(p -> p.lightLevel(s -> 15))
+                .properties(GlassBlockBuilders::glassProperties)
+                .loot((p, lb) -> p.dropOther(lb, AllBlocks.SHAFT.get()))
+                .addLayer(() -> RenderType::cutout)
+                .onRegister(connectedTextures(() -> new GlassEncasedCTBehaviour(ctEntry)))
+                .onRegister(CreateRegistrate.casingConnectivity((block, cc) ->
+                        cc.make(block, ctEntry, (state, face) -> true)))
+                .onRegister(block -> EncasingRegistry.addVariant(AllBlocks.SHAFT.get(), block))
+                .transform(pickaxeOnly())
+                .blockstate((ctx, prov) ->
+                        axisBlock(ctx, prov, state -> prov.models()
+                                .withExistingParent(ctx.getName(), CreatePrism.asResource("block/illumination_encased_shaft/block"))
+                                .texture("casing", CreatePrism.asResource("block/" + casing + "_illumination_casing"))
+                                .texture("opening", getOpening(casing)), true))
+                .item()
+                .model((ctx, prov) -> prov
+                        .withExistingParent(ctx.getName(), CreatePrism.asResource("block/illumination_encased_shaft/block"))
+                        .texture("casing", CreatePrism.asResource("block/" + casing + "_illumination_casing"))
                         .texture("opening", getOpening(casing)))
                 .build()
                 .register();
@@ -140,6 +203,58 @@ public class GlassBlockBuilders {
                     String blockFolder = large ? "encased_large_cogwheel" : "encased_cogwheel";
                     prov.withExistingParent(ctx.getName(), CreatePrism.asResource("block/" + blockFolder + "/item"))
                             .texture("casing", CreatePrism.asResource("block/" + name + "_glass_casing"))
+                            .texture("backing", getBacking(casingType))
+                            .texture("opening", getOpening(casingType))
+                            .texture("siding", getSiding(casingType, large));
+                })
+                .build()
+                .register();
+    }
+
+    // Illumination Encased Cogwheel Builder
+    public static <T extends AbstractRegistrate<?>> BlockEntry<IlluminationEncasedCogwheel> illuminationEncasedCogwheel(
+            T reg, String casingType, boolean large,
+            NonNullFunction<BlockBehaviour.Properties, IlluminationEncasedCogwheel> factory) {
+        CTSpriteShiftEntry mainShift = CPSpriteShifts.getIlluminationCasingShift(casingType);
+        String name = casingType + "_illumination";
+        String blockName = name + (large ? "_encased_large_cogwheel" : "_encased_cogwheel");
+
+        return reg.block(blockName, factory)
+                .initialProperties(() -> Blocks.GLOWSTONE)
+                .properties(BlockBehaviour.Properties::noOcclusion)
+                .properties(p -> p.lightLevel(s -> 15))
+                .properties(GlassBlockBuilders::glassProperties)
+                .loot((p, lb) -> p.dropOther(lb, large ? AllBlocks.LARGE_COGWHEEL.get() : AllBlocks.COGWHEEL.get()))
+                .addLayer(() -> RenderType::cutout)
+                .onRegister(connectedTextures(() -> getIlluminationCogCTBehaviour(mainShift, casingType, large)))
+                .onRegister(CreateRegistrate.casingConnectivity((block, cc) ->
+                        cc.make(block, mainShift, (state, f) ->
+                                state.getBlock() instanceof IlluminationEncasedCogwheel &&
+                                        f.getAxis() == state.getValue(GlassEncasedCogwheel.AXIS) &&
+                                        !state.getValue(f.getAxisDirection() == Direction.AxisDirection.POSITIVE ?
+                                                GlassEncasedCogwheel.TOP_SHAFT : GlassEncasedCogwheel.BOTTOM_SHAFT))))
+                .onRegister(block -> EncasingRegistry.addVariant(
+                        large ? AllBlocks.LARGE_COGWHEEL.get() : AllBlocks.COGWHEEL.get(), block))
+                .transform(pickaxeOnly())
+                .blockstate((ctx, prov) ->
+                        axisBlock(ctx, prov, blockState -> {
+                            String suffix = (blockState.getValue(GlassEncasedCogwheel.TOP_SHAFT) ? "_top" : "")
+                                    + (blockState.getValue(GlassEncasedCogwheel.BOTTOM_SHAFT) ? "_bottom" : "");
+                            String modelName = ctx.getName() + suffix;
+                            String blockFolder = large ? "encased_large_cogwheel" : "encased_cogwheel";
+                            return prov.models()
+                                    .withExistingParent(modelName, CreatePrism.asResource("block/" + blockFolder + "/block" + suffix))
+                                    .texture("particle", CreatePrism.asResource("block/" + casingType + "_illumination_casing"))
+                                    .texture("casing", CreatePrism.asResource("block/" + casingType + "_illumination_casing"))
+                                    .texture("backing", getBacking(casingType))
+                                    .texture("opening", getOpening(casingType))
+                                    .texture("siding", getSiding(casingType, large));
+                        }, false))
+                .item()
+                .model((ctx, prov) -> {
+                    String blockFolder = large ? "encased_large_cogwheel" : "encased_cogwheel";
+                    prov.withExistingParent(ctx.getName(), CreatePrism.asResource("block/" + blockFolder + "/item"))
+                            .texture("casing", CreatePrism.asResource("block/" + casingType + "_illumination_casing"))
                             .texture("backing", getBacking(casingType))
                             .texture("opening", getOpening(casingType))
                             .texture("siding", getSiding(casingType, large));
@@ -197,13 +312,25 @@ public class GlassBlockBuilders {
                 .register();
     }
 
-    // 修改后的getCogCTBehaviour方法，不使用Couple
+
 // 修改getCogCTBehaviour方法，使用Couple类
     private static GlassEncasedCogCTBehaviour getCogCTBehaviour(CTSpriteShiftEntry mainShift, String casingType, boolean large) {
         if (!large) {
             CTSpriteShiftEntry side = CPSpriteShifts.vertical("encased_cogwheels/" + casingType + "_encased_cogwheel_side");
             CTSpriteShiftEntry otherSide = CPSpriteShifts.horizontal("encased_cogwheels/" + casingType + "_encased_cogwheel_side");
             // 使用Couple创建侧面纹理对
+            Couple<CTSpriteShiftEntry> sideShifts = Couple.create(side, otherSide);
+            return new GlassEncasedCogCTBehaviour(mainShift, sideShifts);
+        } else {
+            return new GlassEncasedCogCTBehaviour(mainShift);
+        }
+    }
+
+    // Helper method for illumination cog CT behaviour
+    private static GlassEncasedCogCTBehaviour getIlluminationCogCTBehaviour(CTSpriteShiftEntry mainShift, String casingType, boolean large) {
+        if (!large) {
+            CTSpriteShiftEntry side = CPSpriteShifts.vertical("encased_cogwheels/" + casingType + "_illumination_encased_cogwheel_side");
+            CTSpriteShiftEntry otherSide = CPSpriteShifts.horizontal("encased_cogwheels/" + casingType + "_illumination_encased_cogwheel_side");
             Couple<CTSpriteShiftEntry> sideShifts = Couple.create(side, otherSide);
             return new GlassEncasedCogCTBehaviour(mainShift, sideShifts);
         } else {

@@ -12,6 +12,7 @@ import java.util.Map;
 public class CPSpriteShifts {
 
     private static final Map<String, Map<Boolean, CTSpriteShiftEntry>> GLASS_CASING_SHIFTS = new HashMap<>();
+    private static final Map<String, CTSpriteShiftEntry> ILLUMINATION_CASING_SHIFTS = new HashMap<>();
     private static final Map<String, CTSpriteShiftEntry> SPRITE_SHIFTS = new HashMap<>();
 
     public static void init() {
@@ -20,6 +21,20 @@ public class CPSpriteShifts {
         registerCasingShift("brass");
         registerCasingShift("copper");
         registerCasingShift("train");
+
+        // Initialize illumination casing shifts
+        registerIlluminationCasingShift("andesite");
+        registerIlluminationCasingShift("copper");
+        registerIlluminationCasingShift("train");
+    }
+
+    private static void registerIlluminationCasingShift(String name) {
+        ILLUMINATION_CASING_SHIFTS.put(name,
+                createOmniShift(name + "_illumination_casing"));
+    }
+
+    public static CTSpriteShiftEntry getIlluminationCasingShift(String casing) {
+        return ILLUMINATION_CASING_SHIFTS.get(casing);
     }
 
     private static void registerCasingShift(String name) {

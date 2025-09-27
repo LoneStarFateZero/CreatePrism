@@ -54,6 +54,36 @@ public class CPBlockEntities {
             .renderer(() -> (context) -> new EncasedCogRenderer(context, true))
             .register();
 
+    // 在现有注册后添加：
+
+    // Illumination Encased Shaft Block Entity
+    public static final BlockEntityEntry<KineticBlockEntity> ILLUMINATION_ENCASED_SHAFT = REGISTRATE
+            .blockEntity("illumination_encased_shaft", KineticBlockEntity::new)
+            .visual(() -> ShaftVisual::new)
+            .validBlocks(CPBlocks.ILLUMINATION_ENCASED_SHAFTS.toArray())
+            .renderer(() -> ShaftRenderer::new)
+            .register();
+
+    // Illumination Encased Small Cogwheel Block Entity
+    public static final BlockEntityEntry<SimpleKineticBlockEntity> ILLUMINATION_ENCASED_COG = REGISTRATE
+            .blockEntity("illumination_encased_cog", SimpleKineticBlockEntity::new)
+            .visual(() -> (context, blockEntity, partialTick) ->
+                    new EncasedCogVisual(context, blockEntity, false, partialTick,
+                            Models.partial(AllPartialModels.SHAFTLESS_COGWHEEL)))
+            .validBlocks(CPBlocks.SMALL_ILLUMINATION_ENCASED_COGWHEELS.toArray())
+            .renderer(() -> (context) -> new EncasedCogRenderer(context, false))
+            .register();
+
+    // Illumination Encased Large Cogwheel Block Entity
+    public static final BlockEntityEntry<SimpleKineticBlockEntity> ILLUMINATION_ENCASED_LARGE_COG = REGISTRATE
+            .blockEntity("illumination_encased_large_cog", SimpleKineticBlockEntity::new)
+            .visual(() -> (context, blockEntity, partialTick) ->
+                    new EncasedCogVisual(context, blockEntity, true, partialTick,
+                            Models.partial(AllPartialModels.SHAFTLESS_LARGE_COGWHEEL)))
+            .validBlocks(CPBlocks.LARGE_ILLUMINATION_ENCASED_COGWHEELS.toArray())
+            .renderer(() -> (context) -> new EncasedCogRenderer(context, true))
+            .register();
+
     public static void register() {
         // Static initialization
     }
