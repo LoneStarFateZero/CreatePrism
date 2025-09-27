@@ -28,7 +28,7 @@ public class CreatePrism {
     public CreatePrism(IEventBus modEventBus, ModContainer modContainer) {
         // Register Registrate
         REGISTRATE.registerEventListeners(modEventBus);
-
+        CPSpriteShifts.init();
         CPBlocks.register();
         CPBlockEntities.register();
         CPItems.register();

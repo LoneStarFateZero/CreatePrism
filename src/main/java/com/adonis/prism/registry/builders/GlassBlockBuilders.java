@@ -10,11 +10,10 @@ import com.simibubi.create.AllTags;
 import com.simibubi.create.content.decoration.MetalScaffoldingBlock;
 import com.simibubi.create.content.decoration.MetalScaffoldingBlockItem;
 import com.simibubi.create.content.decoration.MetalScaffoldingCTBehaviour;
+import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
 import com.simibubi.create.content.decoration.encasing.EncasingRegistry;
 import com.simibubi.create.content.decoration.palettes.AllPaletteBlocks;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
-import com.simibubi.create.foundation.block.connected.SimpleCTBehaviour;
-import com.simibubi.create.foundation.data.CreateRegistrate;
 import com.tterrag.registrate.AbstractRegistrate;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.BlockEntry;
@@ -51,12 +50,12 @@ public class GlassBlockBuilders {
                 .properties(GlassBlockBuilders::glassProperties)
                 .addLayer(() -> RenderType::cutout)
                 .blockstate((c, p) -> p.simpleBlock(c.get()))
-                .onRegister(connectedTextures(() -> new SimpleCTBehaviour(ctEntry)))
-                .onRegister(casingConnectivity((block, cc) -> cc.makeCasing(block, ctEntry))) // 添加这行
+                .onRegister(connectedTextures(() -> new EncasedCTBehaviour(ctEntry))) // 改为EncasedCTBehaviour
+                .onRegister(casingConnectivity((block, cc) -> cc.makeCasing(block, ctEntry)))
                 .tag(AllTags.AllBlockTags.CASING.tag)
                 .recipe((c, p) ->
                         ShapelessRecipeBuilder.shapeless(RecipeCategory.DECORATIONS, c.get())
-                                .requires(clear ? holder.casing().get() : holder.casing().get())
+                                .requires(holder.casing().get())
                                 .requires(AllPaletteBlocks.FRAMED_GLASS.get())
                                 .unlockedBy("has_casing", RegistrateRecipeProvider.has(AllTags.AllItemTags.CASING.tag))
                                 .save(p, CreatePrism.asResource("crafting/glass_casing/" + c.getName())))

@@ -17,11 +17,18 @@ public class CPClient {
 
     @SubscribeEvent
     public static void onClientSetup(FMLClientSetupEvent event) {
-        CPPartialModels.init(); // 如果你有 PartialModels
+        CPSpriteShifts.init(); // 确保这行在最前面
+        CPPartialModels.init();
 
         event.enqueueWork(() -> {
             // 设置渲染层
             ItemBlockRenderTypes.setRenderLayer(CPBlocks.COPPER_TAP.get(), RenderType.cutout());
+
+            // 为所有玻璃外壳设置渲染层
+            CPBlocks.GLASS_CASINGS.blockEntryMap.values().forEach(entry ->
+                    ItemBlockRenderTypes.setRenderLayer(entry.get(), RenderType.cutout()));
+            CPBlocks.CLEAR_GLASS_CASINGS.blockEntryMap.values().forEach(entry ->
+                    ItemBlockRenderTypes.setRenderLayer(entry.get(), RenderType.cutout()));
 
             // 注册方块实体渲染器
             BlockEntityRenderers.register(CPBlockEntities.COPPER_TAP.get(), CopperTapRenderer::new);
