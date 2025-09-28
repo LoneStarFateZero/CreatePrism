@@ -32,7 +32,7 @@ public class CPClient {
 
             // 为所有照明外壳设置渲染层
             CPBlocks.ILLUMINATION_CASINGS.blockEntryMap.values().forEach(entry ->
-                    ItemBlockRenderTypes.setRenderLayer(entry.get(), RenderType.cutout()));
+                    ItemBlockRenderTypes.setRenderLayer(entry.get(), RenderType.translucent()));
 
             // 为所有玻璃包覆轴设置渲染层
             CPBlocks.GLASS_ENCASED_SHAFTS.blockEntryMap.values().forEach(entry ->
@@ -42,7 +42,7 @@ public class CPClient {
 
             // 为所有照明包覆轴设置渲染层
             CPBlocks.ILLUMINATION_ENCASED_SHAFTS.blockEntryMap.values().forEach(entry ->
-                    ItemBlockRenderTypes.setRenderLayer(entry.get(), RenderType.cutout()));
+                    ItemBlockRenderTypes.setRenderLayer(entry.get(), RenderType.translucent()));
 
             // 为所有玻璃包覆齿轮设置渲染层
             CPBlocks.SMALL_GLASS_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry ->
@@ -56,9 +56,9 @@ public class CPClient {
 
             // 为所有照明包覆齿轮设置渲染层
             CPBlocks.SMALL_ILLUMINATION_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry ->
-                    ItemBlockRenderTypes.setRenderLayer(entry.get(), RenderType.cutout()));
+                    ItemBlockRenderTypes.setRenderLayer(entry.get(), RenderType.translucent()));
             CPBlocks.LARGE_ILLUMINATION_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry ->
-                    ItemBlockRenderTypes.setRenderLayer(entry.get(), RenderType.cutout()));
+                    ItemBlockRenderTypes.setRenderLayer(entry.get(), RenderType.translucent()));
 
             // 为玻璃脚手架设置渲染层
             ItemBlockRenderTypes.setRenderLayer(CPBlocks.ANDESITE_GLASS_SCAFFOLD.get(), RenderType.cutout());

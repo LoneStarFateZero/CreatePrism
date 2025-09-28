@@ -77,7 +77,7 @@ public class GlassBlockBuilders {
         return reg.block(newName, IlluminationCasing::new)
                 .initialProperties(() -> Blocks.GLOWSTONE)
                 .properties(p -> p.sound(SoundType.GLASS).noOcclusion().lightLevel(s -> 15))
-                .addLayer(() -> RenderType::cutout)
+                .addLayer(() -> RenderType::translucent)
                 .blockstate((c, p) -> p.simpleBlock(c.get()))
                 .onRegister(connectedTextures(() -> new EncasedCTBehaviour(ctEntry)))  // 照明机壳和玻璃机壳一样使用EncasedCTBehaviour
                 .onRegister(casingConnectivity((block, cc) -> cc.makeCasing(block, ctEntry)))
@@ -139,7 +139,7 @@ public class GlassBlockBuilders {
                 .properties(p -> p.lightLevel(s -> 15))
                 .properties(GlassBlockBuilders::glassProperties)
                 .loot((p, lb) -> p.dropOther(lb, AllBlocks.SHAFT.get()))
-                .addLayer(() -> RenderType::cutout)
+                .addLayer(() -> RenderType::translucent)
                 .onRegister(connectedTextures(() -> new IlluminationEncasedCTBehaviour(ctEntry)))  // 使用照明专用的CTBehaviour
                 .onRegister(casingConnectivity((block, cc) ->
                         cc.make(block, ctEntry, (state, face) -> true)))
@@ -224,7 +224,7 @@ public class GlassBlockBuilders {
                 .properties(p -> p.lightLevel(s -> 15))
                 .properties(GlassBlockBuilders::glassProperties)
                 .loot((p, lb) -> p.dropOther(lb, large ? AllBlocks.LARGE_COGWHEEL.get() : AllBlocks.COGWHEEL.get()))
-                .addLayer(() -> RenderType::cutout)
+                .addLayer(() -> RenderType::translucent)
                 .onRegister(connectedTextures(() -> getIlluminationCogCTBehaviour(mainShift, casingType, large)))  // 使用照明专用的CTBehaviour
                 .onRegister(casingConnectivity((block, cc) ->
                         cc.make(block, mainShift, (state, f) ->
