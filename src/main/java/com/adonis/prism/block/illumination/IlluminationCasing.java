@@ -14,7 +14,17 @@ public class IlluminationCasing extends CasingBlock {
 
     @Override
     public boolean skipRendering(BlockState state, BlockState adjacentBlockState, Direction side) {
-        return (state.getBlock() instanceof IlluminationCasing) && 
-               (adjacentBlockState.getBlock() instanceof IlluminationCasing);
+        return (state.getBlock() instanceof IlluminationCasing) &&
+                (adjacentBlockState.getBlock() instanceof IlluminationCasing);
+    }
+
+    @Override
+    public boolean propagatesSkylightDown(BlockState state, BlockGetter level, BlockPos pos) {
+        return true;
+    }
+
+    @Override
+    public float getShadeBrightness(BlockState state, BlockGetter level, BlockPos pos) {
+        return 1.0f;
     }
 }

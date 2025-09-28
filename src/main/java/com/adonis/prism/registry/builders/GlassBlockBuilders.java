@@ -3,8 +3,6 @@ package com.adonis.prism.registry.builders;
 import com.adonis.prism.CreatePrism;
 import com.adonis.prism.block.glass.*;
 import com.adonis.prism.block.illumination.*;
-import com.simibubi.create.foundation.data.CreateRegistrate;
-import net.minecraft.world.item.Items;
 import com.adonis.prism.registry.CPSpriteShifts;
 import com.adonis.prism.util.CasingHolder;
 import com.simibubi.create.AllBlocks;
@@ -28,6 +26,7 @@ import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -53,7 +52,7 @@ public class GlassBlockBuilders {
                 .properties(GlassBlockBuilders::glassProperties)
                 .addLayer(() -> RenderType::cutout)
                 .blockstate((c, p) -> p.simpleBlock(c.get()))
-                .onRegister(connectedTextures(() -> new EncasedCTBehaviour(ctEntry))) // 改为EncasedCTBehaviour
+                .onRegister(connectedTextures(() -> new EncasedCTBehaviour(ctEntry)))
                 .onRegister(casingConnectivity((block, cc) -> cc.makeCasing(block, ctEntry)))
                 .tag(AllTags.AllBlockTags.CASING.tag)
                 .recipe((c, p) ->
@@ -80,7 +79,7 @@ public class GlassBlockBuilders {
                 .properties(p -> p.sound(SoundType.GLASS).noOcclusion().lightLevel(s -> 15))
                 .addLayer(() -> RenderType::cutout)
                 .blockstate((c, p) -> p.simpleBlock(c.get()))
-                .onRegister(connectedTextures(() -> new EncasedCTBehaviour(ctEntry)))
+                .onRegister(connectedTextures(() -> new IlluminationEncasedCTBehaviour(ctEntry)))
                 .onRegister(casingConnectivity((block, cc) -> cc.makeCasing(block, ctEntry)))
                 .tag(AllTags.AllBlockTags.CASING.tag)
                 .recipe((c, p) ->
@@ -141,8 +140,8 @@ public class GlassBlockBuilders {
                 .properties(GlassBlockBuilders::glassProperties)
                 .loot((p, lb) -> p.dropOther(lb, AllBlocks.SHAFT.get()))
                 .addLayer(() -> RenderType::cutout)
-                .onRegister(connectedTextures(() -> new GlassEncasedCTBehaviour(ctEntry)))
-                .onRegister(CreateRegistrate.casingConnectivity((block, cc) ->
+                .onRegister(connectedTextures(() -> new IlluminationEncasedCTBehaviour(ctEntry)))
+                .onRegister(casingConnectivity((block, cc) ->
                         cc.make(block, ctEntry, (state, face) -> true)))
                 .onRegister(block -> EncasingRegistry.addVariant(AllBlocks.SHAFT.get(), block))
                 .transform(pickaxeOnly())
@@ -227,7 +226,7 @@ public class GlassBlockBuilders {
                 .loot((p, lb) -> p.dropOther(lb, large ? AllBlocks.LARGE_COGWHEEL.get() : AllBlocks.COGWHEEL.get()))
                 .addLayer(() -> RenderType::cutout)
                 .onRegister(connectedTextures(() -> getIlluminationCogCTBehaviour(mainShift, casingType, large)))
-                .onRegister(CreateRegistrate.casingConnectivity((block, cc) ->
+                .onRegister(casingConnectivity((block, cc) ->
                         cc.make(block, mainShift, (state, f) ->
                                 state.getBlock() instanceof IlluminationEncasedCogwheel &&
                                         f.getAxis() == state.getValue(GlassEncasedCogwheel.AXIS) &&
@@ -312,13 +311,10 @@ public class GlassBlockBuilders {
                 .register();
     }
 
-
-// 修改getCogCTBehaviour方法，使用Couple类
     private static GlassEncasedCogCTBehaviour getCogCTBehaviour(CTSpriteShiftEntry mainShift, String casingType, boolean large) {
         if (!large) {
             CTSpriteShiftEntry side = CPSpriteShifts.vertical("encased_cogwheels/" + casingType + "_encased_cogwheel_side");
             CTSpriteShiftEntry otherSide = CPSpriteShifts.horizontal("encased_cogwheels/" + casingType + "_encased_cogwheel_side");
-            // 使用Couple创建侧面纹理对
             Couple<CTSpriteShiftEntry> sideShifts = Couple.create(side, otherSide);
             return new GlassEncasedCogCTBehaviour(mainShift, sideShifts);
         } else {
@@ -326,19 +322,18 @@ public class GlassBlockBuilders {
         }
     }
 
-    // Helper method for illumination cog CT behaviour
-    private static GlassEncasedCogCTBehaviour getIlluminationCogCTBehaviour(CTSpriteShiftEntry mainShift, String casingType, boolean large) {
+    private static IlluminationEncasedCogCTBehaviour getIlluminationCogCTBehaviour(CTSpriteShiftEntry mainShift, String casingType, boolean large) {
         if (!large) {
             CTSpriteShiftEntry side = CPSpriteShifts.vertical("encased_cogwheels/" + casingType + "_illumination_encased_cogwheel_side");
             CTSpriteShiftEntry otherSide = CPSpriteShifts.horizontal("encased_cogwheels/" + casingType + "_illumination_encased_cogwheel_side");
             Couple<CTSpriteShiftEntry> sideShifts = Couple.create(side, otherSide);
-            return new GlassEncasedCogCTBehaviour(mainShift, sideShifts);
+            return new IlluminationEncasedCogCTBehaviour(mainShift, sideShifts);
         } else {
-            return new GlassEncasedCogCTBehaviour(mainShift);
+            return new IlluminationEncasedCogCTBehaviour(mainShift);
         }
     }
 
-    // Helper Methods 保持不变
+    // Helper Methods
     private static BlockBehaviour.Properties glassProperties(BlockBehaviour.Properties p) {
         return p.isValidSpawn(($, $$, $$$, $$$$) -> false)
                 .isRedstoneConductor(($, $$, $$$) -> false)
@@ -427,7 +422,7 @@ public class GlassBlockBuilders {
         } else if (casing.equals("copper")) {
             return AllBlocks.COPPER_SCAFFOLD;
         } else {
-            return AllBlocks.ANDESITE_SCAFFOLD; // 默认值
+            return AllBlocks.ANDESITE_SCAFFOLD;
         }
     }
 }
