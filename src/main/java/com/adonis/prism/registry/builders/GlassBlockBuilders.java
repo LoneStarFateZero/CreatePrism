@@ -79,7 +79,7 @@ public class GlassBlockBuilders {
                 .properties(p -> p.sound(SoundType.GLASS).noOcclusion().lightLevel(s -> 15))
                 .addLayer(() -> RenderType::cutout)
                 .blockstate((c, p) -> p.simpleBlock(c.get()))
-                .onRegister(connectedTextures(() -> new IlluminationEncasedCTBehaviour(ctEntry)))
+                .onRegister(connectedTextures(() -> new EncasedCTBehaviour(ctEntry)))  // 照明机壳和玻璃机壳一样使用EncasedCTBehaviour
                 .onRegister(casingConnectivity((block, cc) -> cc.makeCasing(block, ctEntry)))
                 .tag(AllTags.AllBlockTags.CASING.tag)
                 .recipe((c, p) ->
@@ -140,7 +140,7 @@ public class GlassBlockBuilders {
                 .properties(GlassBlockBuilders::glassProperties)
                 .loot((p, lb) -> p.dropOther(lb, AllBlocks.SHAFT.get()))
                 .addLayer(() -> RenderType::cutout)
-                .onRegister(connectedTextures(() -> new IlluminationEncasedCTBehaviour(ctEntry)))
+                .onRegister(connectedTextures(() -> new IlluminationEncasedCTBehaviour(ctEntry)))  // 使用照明专用的CTBehaviour
                 .onRegister(casingConnectivity((block, cc) ->
                         cc.make(block, ctEntry, (state, face) -> true)))
                 .onRegister(block -> EncasingRegistry.addVariant(AllBlocks.SHAFT.get(), block))
@@ -225,7 +225,7 @@ public class GlassBlockBuilders {
                 .properties(GlassBlockBuilders::glassProperties)
                 .loot((p, lb) -> p.dropOther(lb, large ? AllBlocks.LARGE_COGWHEEL.get() : AllBlocks.COGWHEEL.get()))
                 .addLayer(() -> RenderType::cutout)
-                .onRegister(connectedTextures(() -> getIlluminationCogCTBehaviour(mainShift, casingType, large)))
+                .onRegister(connectedTextures(() -> getIlluminationCogCTBehaviour(mainShift, casingType, large)))  // 使用照明专用的CTBehaviour
                 .onRegister(casingConnectivity((block, cc) ->
                         cc.make(block, mainShift, (state, f) ->
                                 state.getBlock() instanceof IlluminationEncasedCogwheel &&
@@ -247,7 +247,7 @@ public class GlassBlockBuilders {
                                     .texture("casing", CreatePrism.asResource("block/" + casingType + "_illumination_casing"))
                                     .texture("backing", getBacking(casingType))
                                     .texture("opening", getOpening(casingType))
-                                    .texture("siding", getSiding(casingType, large));
+                                    .texture("siding", getIlluminationSiding(casingType, large));
                         }, false))
                 .item()
                 .model((ctx, prov) -> {
@@ -256,7 +256,7 @@ public class GlassBlockBuilders {
                             .texture("casing", CreatePrism.asResource("block/" + casingType + "_illumination_casing"))
                             .texture("backing", getBacking(casingType))
                             .texture("opening", getOpening(casingType))
-                            .texture("siding", getSiding(casingType, large));
+                            .texture("siding", getIlluminationSiding(casingType, large));
                 })
                 .build()
                 .register();
@@ -311,6 +311,7 @@ public class GlassBlockBuilders {
                 .register();
     }
 
+    // 使用玻璃齿轮箱的CTBehaviour
     private static GlassEncasedCogCTBehaviour getCogCTBehaviour(CTSpriteShiftEntry mainShift, String casingType, boolean large) {
         if (!large) {
             CTSpriteShiftEntry side = CPSpriteShifts.vertical("encased_cogwheels/" + casingType + "_encased_cogwheel_side");
@@ -322,14 +323,15 @@ public class GlassBlockBuilders {
         }
     }
 
+    // 使用照明齿轮箱的CTBehaviour
     private static IlluminationEncasedCogCTBehaviour getIlluminationCogCTBehaviour(CTSpriteShiftEntry mainShift, String casingType, boolean large) {
         if (!large) {
             CTSpriteShiftEntry side = CPSpriteShifts.vertical("encased_cogwheels/" + casingType + "_illumination_encased_cogwheel_side");
             CTSpriteShiftEntry otherSide = CPSpriteShifts.horizontal("encased_cogwheels/" + casingType + "_illumination_encased_cogwheel_side");
             Couple<CTSpriteShiftEntry> sideShifts = Couple.create(side, otherSide);
-            return new IlluminationEncasedCogCTBehaviour(mainShift, sideShifts);
+            return new IlluminationEncasedCogCTBehaviour(mainShift, sideShifts);  // 返回照明专用的
         } else {
-            return new IlluminationEncasedCogCTBehaviour(mainShift);
+            return new IlluminationEncasedCogCTBehaviour(mainShift);  // 返回照明专用的
         }
     }
 
@@ -364,6 +366,11 @@ public class GlassBlockBuilders {
     private static ResourceLocation getSiding(String casing, boolean large) {
         return CreatePrism.asResource("block/encased_cogwheels/" +
                 (large ? "large_" : "") + casing + "_encased_cogwheel_side");
+    }
+
+    private static ResourceLocation getIlluminationSiding(String casing, boolean large) {
+        return CreatePrism.asResource("block/encased_cogwheels/" +
+                (large ? "large_" : "") + casing + "_illumination_encased_cogwheel_side");
     }
 
     private static CTSpriteShiftEntry getSideShift(String casing) {

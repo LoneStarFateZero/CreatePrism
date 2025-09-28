@@ -1,0 +1,7 @@
+{
+  "parent": "prism:block/glass_encased_shaft/block",
+  "textures": {
+    "casing": "prism:block/train_illumination_casing",
+    "opening": "prism:block/train_gearbox"
+  }
+}

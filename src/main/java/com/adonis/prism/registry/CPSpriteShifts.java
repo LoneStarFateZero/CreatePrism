@@ -24,6 +24,7 @@ public class CPSpriteShifts {
 
         // Initialize illumination casing shifts
         registerIlluminationCasingShift("andesite");
+        registerIlluminationCasingShift("brass");
         registerIlluminationCasingShift("copper");
         registerIlluminationCasingShift("train");
     }

@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "prism:block/brass_glass_casing"
+      "model": "prism:block/brass_illumination_casing"
     }
   }
 }
