@@ -17,7 +17,7 @@ public class CPCreativeTab {
             () -> CreativeModeTab.builder()
                     .title(Component.translatable("itemGroup.prism.main"))
                     .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
-                    .icon(() -> CPBlocks.GLASS_CASINGS.getCasing("copper").asItem().getDefaultInstance())
+                    .icon(() -> CPBlocks.ILLUMINATION_CASINGS.getCasing("brass").asItem().getDefaultInstance())
                     .displayItems((parameters, output) -> {
                         // ========== Original Items ==========
                         output.accept(CPBlocks.COPPER_TAP);
@@ -32,30 +32,30 @@ public class CPCreativeTab {
                         // ========== Illumination Casings ==========
                         CPBlocks.ILLUMINATION_CASINGS.blockEntryMap.values().forEach(entry -> output.accept(entry));
 
-                        // ========== Glass Encased Shafts ==========
-                        // Standard Glass Encased Shafts
-                        CPBlocks.GLASS_ENCASED_SHAFTS.blockEntryMap.values().forEach(entry -> output.accept(entry));
-                        // Clear Glass Encased Shafts
-                        CPBlocks.CLEAR_GLASS_ENCASED_SHAFTS.blockEntryMap.values().forEach(entry -> output.accept(entry));
-
-                        // ========== Illumination Encased Shafts ==========
-                        CPBlocks.ILLUMINATION_ENCASED_SHAFTS.blockEntryMap.values().forEach(entry -> output.accept(entry));
-
-                        // ========== Glass Encased Cogwheels ==========
-                        // Small Glass Encased Cogwheels
-                        CPBlocks.SMALL_GLASS_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry -> output.accept(entry));
-                        CPBlocks.SMALL_CLEAR_GLASS_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry -> output.accept(entry));
-
-                        // Large Glass Encased Cogwheels
-                        CPBlocks.LARGE_GLASS_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry -> output.accept(entry));
-                        CPBlocks.LARGE_CLEAR_GLASS_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry -> output.accept(entry));
-
-                        // ========== Illumination Encased Cogwheels ==========
-                        // Small Illumination Encased Cogwheels
-                        CPBlocks.SMALL_ILLUMINATION_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry -> output.accept(entry));
-
-                        // Large Illumination Encased Cogwheels
-                        CPBlocks.LARGE_ILLUMINATION_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry -> output.accept(entry));
+//                        // ========== Glass Encased Shafts ==========
+//                        // Standard Glass Encased Shafts
+//                        CPBlocks.GLASS_ENCASED_SHAFTS.blockEntryMap.values().forEach(entry -> output.accept(entry));
+//                        // Clear Glass Encased Shafts
+//                        CPBlocks.CLEAR_GLASS_ENCASED_SHAFTS.blockEntryMap.values().forEach(entry -> output.accept(entry));
+//
+//                        // ========== Illumination Encased Shafts ==========
+//                        CPBlocks.ILLUMINATION_ENCASED_SHAFTS.blockEntryMap.values().forEach(entry -> output.accept(entry));
+//
+//                        // ========== Glass Encased Cogwheels ==========
+//                        // Small Glass Encased Cogwheels
+//                        CPBlocks.SMALL_GLASS_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry -> output.accept(entry));
+//                        CPBlocks.SMALL_CLEAR_GLASS_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry -> output.accept(entry));
+//
+//                        // Large Glass Encased Cogwheels
+//                        CPBlocks.LARGE_GLASS_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry -> output.accept(entry));
+//                        CPBlocks.LARGE_CLEAR_GLASS_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry -> output.accept(entry));
+//
+//                        // ========== Illumination Encased Cogwheels ==========
+//                        // Small Illumination Encased Cogwheels
+//                        CPBlocks.SMALL_ILLUMINATION_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry -> output.accept(entry));
+//
+//                        // Large Illumination Encased Cogwheels
+//                        CPBlocks.LARGE_ILLUMINATION_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry -> output.accept(entry));
 
                         // ========== Glass Scaffoldings ==========
                         // Standard Glass Scaffoldings
