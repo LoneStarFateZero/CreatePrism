@@ -1,6 +1,8 @@
 package com.adonis.prism;
 
 import com.adonis.prism.registry.*;
+import com.simibubi.create.AllBlocks;
+import com.simibubi.create.content.decoration.encasing.EncasingRegistry;
 import com.simibubi.create.foundation.item.ItemDescription;
 import com.simibubi.create.foundation.item.KineticStats;
 import com.simibubi.create.foundation.item.TooltipModifier;
@@ -41,9 +43,37 @@ public class CreatePrism {
 
     private void onCommonSetup(FMLCommonSetupEvent event) {
         event.enqueueWork(() -> {
+            // Register all encasing variants after all blocks are registered
+            registerEncasingVariants();
             // Initialize partial models
             CPPartialModels.init();
         });
+    }
+
+    private void registerEncasingVariants() {
+        // Shaft variants
+        CPBlocks.GLASS_ENCASED_SHAFTS.blockEntryMap.values().forEach(entry ->
+                EncasingRegistry.addVariant(AllBlocks.SHAFT.get(), entry.get()));
+        CPBlocks.CLEAR_GLASS_ENCASED_SHAFTS.blockEntryMap.values().forEach(entry ->
+                EncasingRegistry.addVariant(AllBlocks.SHAFT.get(), entry.get()));
+        CPBlocks.ILLUMINATION_ENCASED_SHAFTS.blockEntryMap.values().forEach(entry ->
+                EncasingRegistry.addVariant(AllBlocks.SHAFT.get(), entry.get()));
+
+        // Small cogwheel variants
+        CPBlocks.SMALL_GLASS_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry ->
+                EncasingRegistry.addVariant(AllBlocks.COGWHEEL.get(), entry.get()));
+        CPBlocks.SMALL_CLEAR_GLASS_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry ->
+                EncasingRegistry.addVariant(AllBlocks.COGWHEEL.get(), entry.get()));
+        CPBlocks.SMALL_ILLUMINATION_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry ->
+                EncasingRegistry.addVariant(AllBlocks.COGWHEEL.get(), entry.get()));
+
+        // Large cogwheel variants
+        CPBlocks.LARGE_GLASS_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry ->
+                EncasingRegistry.addVariant(AllBlocks.LARGE_COGWHEEL.get(), entry.get()));
+        CPBlocks.LARGE_CLEAR_GLASS_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry ->
+                EncasingRegistry.addVariant(AllBlocks.LARGE_COGWHEEL.get(), entry.get()));
+        CPBlocks.LARGE_ILLUMINATION_ENCASED_COGWHEELS.blockEntryMap.values().forEach(entry ->
+                EncasingRegistry.addVariant(AllBlocks.LARGE_COGWHEEL.get(), entry.get()));
     }
 
     public static ResourceLocation asResource(String path) {

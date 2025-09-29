@@ -12,7 +12,6 @@ import com.simibubi.create.content.decoration.MetalScaffoldingBlock;
 import com.simibubi.create.content.decoration.MetalScaffoldingBlockItem;
 import com.simibubi.create.content.decoration.MetalScaffoldingCTBehaviour;
 import com.simibubi.create.content.decoration.encasing.EncasedCTBehaviour;
-import com.simibubi.create.content.decoration.encasing.EncasingRegistry;
 import com.simibubi.create.content.decoration.palettes.AllPaletteBlocks;
 import com.simibubi.create.foundation.block.connected.CTSpriteShiftEntry;
 import com.tterrag.registrate.AbstractRegistrate;
@@ -79,7 +78,7 @@ public class GlassBlockBuilders {
                 .properties(p -> p.sound(SoundType.GLASS).noOcclusion().lightLevel(s -> 15))
                 .addLayer(() -> RenderType::translucent)
                 .blockstate((c, p) -> p.simpleBlock(c.get()))
-                .onRegister(connectedTextures(() -> new EncasedCTBehaviour(ctEntry)))  // 照明机壳和玻璃机壳一样使用EncasedCTBehaviour
+                .onRegister(connectedTextures(() -> new EncasedCTBehaviour(ctEntry)))
                 .onRegister(casingConnectivity((block, cc) -> cc.makeCasing(block, ctEntry)))
                 .tag(AllTags.AllBlockTags.CASING.tag)
                 .recipe((c, p) ->
@@ -105,7 +104,7 @@ public class GlassBlockBuilders {
                 .initialProperties(() -> Blocks.GLASS)
                 .properties(BlockBehaviour.Properties::noOcclusion)
                 .properties(GlassBlockBuilders::glassProperties)
-                .onRegister(block -> EncasingRegistry.addVariant(AllBlocks.SHAFT.get(), block))
+                // Removed onRegister for EncasingRegistry - will be done in FMLCommonSetupEvent
                 .loot((p, lb) -> p.dropOther(lb, AllBlocks.SHAFT.get()))
                 .addLayer(() -> RenderType::cutout)
                 .onRegister(connectedTextures(() -> new GlassEncasedCTBehaviour(ctEntry)))
@@ -140,10 +139,10 @@ public class GlassBlockBuilders {
                 .properties(GlassBlockBuilders::glassProperties)
                 .loot((p, lb) -> p.dropOther(lb, AllBlocks.SHAFT.get()))
                 .addLayer(() -> RenderType::translucent)
-                .onRegister(connectedTextures(() -> new IlluminationEncasedCTBehaviour(ctEntry)))  // 使用照明专用的CTBehaviour
+                .onRegister(connectedTextures(() -> new IlluminationEncasedCTBehaviour(ctEntry)))
                 .onRegister(casingConnectivity((block, cc) ->
                         cc.make(block, ctEntry, (state, face) -> true)))
-                .onRegister(block -> EncasingRegistry.addVariant(AllBlocks.SHAFT.get(), block))
+                // Removed onRegister for EncasingRegistry - will be done in FMLCommonSetupEvent
                 .transform(pickaxeOnly())
                 .blockstate((ctx, prov) ->
                         axisBlock(ctx, prov, state -> prov.models()
@@ -171,9 +170,14 @@ public class GlassBlockBuilders {
                 .initialProperties(() -> Blocks.GLASS)
                 .properties(BlockBehaviour.Properties::noOcclusion)
                 .properties(GlassBlockBuilders::glassProperties)
-                .onRegister(block -> EncasingRegistry.addVariant(
-                        large ? AllBlocks.LARGE_COGWHEEL.get() : AllBlocks.COGWHEEL.get(), block))
-                .loot((p, lb) -> p.dropOther(lb, large ? AllBlocks.LARGE_COGWHEEL.get() : AllBlocks.COGWHEEL.get()))
+                // Removed onRegister for EncasingRegistry - will be done in FMLCommonSetupEvent
+                .loot((p, lb) -> {
+                    if (large) {
+                        p.dropOther(lb, AllBlocks.LARGE_COGWHEEL.get());
+                    } else {
+                        p.dropOther(lb, AllBlocks.COGWHEEL.get());
+                    }
+                })
                 .addLayer(() -> RenderType::cutout)
                 .onRegister(connectedTextures(() -> getCogCTBehaviour(mainShift, casingType, large)))
                 .onRegister(casingConnectivity((block, cc) ->
@@ -223,17 +227,22 @@ public class GlassBlockBuilders {
                 .properties(BlockBehaviour.Properties::noOcclusion)
                 .properties(p -> p.lightLevel(s -> 15))
                 .properties(GlassBlockBuilders::glassProperties)
-                .loot((p, lb) -> p.dropOther(lb, large ? AllBlocks.LARGE_COGWHEEL.get() : AllBlocks.COGWHEEL.get()))
+                .loot((p, lb) -> {
+                    if (large) {
+                        p.dropOther(lb, AllBlocks.LARGE_COGWHEEL.get());
+                    } else {
+                        p.dropOther(lb, AllBlocks.COGWHEEL.get());
+                    }
+                })
                 .addLayer(() -> RenderType::translucent)
-                .onRegister(connectedTextures(() -> getIlluminationCogCTBehaviour(mainShift, casingType, large)))  // 使用照明专用的CTBehaviour
+                .onRegister(connectedTextures(() -> getIlluminationCogCTBehaviour(mainShift, casingType, large)))
                 .onRegister(casingConnectivity((block, cc) ->
                         cc.make(block, mainShift, (state, f) ->
                                 state.getBlock() instanceof IlluminationEncasedCogwheel &&
                                         f.getAxis() == state.getValue(GlassEncasedCogwheel.AXIS) &&
                                         !state.getValue(f.getAxisDirection() == Direction.AxisDirection.POSITIVE ?
                                                 GlassEncasedCogwheel.TOP_SHAFT : GlassEncasedCogwheel.BOTTOM_SHAFT))))
-                .onRegister(block -> EncasingRegistry.addVariant(
-                        large ? AllBlocks.LARGE_COGWHEEL.get() : AllBlocks.COGWHEEL.get(), block))
+                // Removed onRegister for EncasingRegistry - will be done in FMLCommonSetupEvent
                 .transform(pickaxeOnly())
                 .blockstate((ctx, prov) ->
                         axisBlock(ctx, prov, blockState -> {
@@ -311,7 +320,6 @@ public class GlassBlockBuilders {
                 .register();
     }
 
-    // 使用玻璃齿轮箱的CTBehaviour
     private static GlassEncasedCogCTBehaviour getCogCTBehaviour(CTSpriteShiftEntry mainShift, String casingType, boolean large) {
         if (!large) {
             CTSpriteShiftEntry side = CPSpriteShifts.vertical("encased_cogwheels/" + casingType + "_encased_cogwheel_side");
@@ -323,19 +331,17 @@ public class GlassBlockBuilders {
         }
     }
 
-    // 使用照明齿轮箱的CTBehaviour
     private static IlluminationEncasedCogCTBehaviour getIlluminationCogCTBehaviour(CTSpriteShiftEntry mainShift, String casingType, boolean large) {
         if (!large) {
             CTSpriteShiftEntry side = CPSpriteShifts.vertical("encased_cogwheels/" + casingType + "_illumination_encased_cogwheel_side");
             CTSpriteShiftEntry otherSide = CPSpriteShifts.horizontal("encased_cogwheels/" + casingType + "_illumination_encased_cogwheel_side");
             Couple<CTSpriteShiftEntry> sideShifts = Couple.create(side, otherSide);
-            return new IlluminationEncasedCogCTBehaviour(mainShift, sideShifts);  // 返回照明专用的
+            return new IlluminationEncasedCogCTBehaviour(mainShift, sideShifts);
         } else {
-            return new IlluminationEncasedCogCTBehaviour(mainShift);  // 返回照明专用的
+            return new IlluminationEncasedCogCTBehaviour(mainShift);
         }
     }
 
-    // Helper Methods
     private static BlockBehaviour.Properties glassProperties(BlockBehaviour.Properties p) {
         return p.isValidSpawn(($, $$, $$$, $$$$) -> false)
                 .isRedstoneConductor(($, $$, $$$) -> false)

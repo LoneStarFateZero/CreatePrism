@@ -27,7 +27,7 @@ license="${mod_license}"
     modId="create"
     type="required"
     versionRange="${create_version_range}"
-    ordering="NONE"
+    ordering="AFTER"
     side="BOTH"
 
 
