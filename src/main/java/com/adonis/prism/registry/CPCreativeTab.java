@@ -19,10 +19,6 @@ public class CPCreativeTab {
                     .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
                     .icon(() -> CPBlocks.ILLUMINATION_CASINGS.getCasing("brass").asItem().getDefaultInstance())
                     .displayItems((parameters, output) -> {
-                        // ========== Original Items ==========
-                        output.accept(CPBlocks.COPPER_TAP);
-                        output.accept(CPItems.HONEYCOMB_MOLD);
-
                         // ========== Glass Casings ==========
                         // Standard Glass Casings
                         CPBlocks.GLASS_CASINGS.blockEntryMap.values().forEach(entry -> output.accept(entry));

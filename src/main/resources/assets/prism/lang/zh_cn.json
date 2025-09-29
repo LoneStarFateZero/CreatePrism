@@ -1,15 +1,5 @@
 {
-  "item.prism.honeycomb_mold": "蜜脾模具",
-  "block.prism.copper_tap": "铜龙头",
-  "item.prism.honeycomb_mold.tooltip.summary": "用于蜜脾的压块塑形配方",
-
   "itemGroup.prism.main": "机械动力：流光溢彩",
-
-  "prism.ponder.copper_tap.header": "使用铜龙头",
-  "prism.ponder.copper_tap.text_1": "铜龙头从它身后的流体容器中获取流体，可以填充下方的炼药锅、工作盆",
-  "prism.ponder.copper_tap.text_2": "铜龙头可以依附在树叶上，并且可以从含水树叶中无限输出水",
-  "prism.ponder.copper_tap.text_3": "铜龙头可以对下方的置物台进行注液加工",
-  "prism.ponder.copper_tap.text_4": "可以用红石信号来控制铜龙头的开关",
 
   "block.prism.andesite_clear_glass_casing": "安山通透玻璃机壳",
   "block.prism.andesite_clear_glass_encased_cogwheel": "安山通透玻璃齿轮箱",

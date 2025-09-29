@@ -1,0 +1,16 @@
+{
+  "type": "create:item_application",
+  "ingredients": [
+    {
+      "item": "create:andesite_scaffolding"
+    },
+    {
+      "tag": "c:glass_panes"
+    }
+  ],
+  "results": [
+    {
+      "id": "prism:andesite_glass_scaffolding"
+    }
+  ]
+}

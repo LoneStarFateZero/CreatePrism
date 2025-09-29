@@ -1,15 +1,5 @@
 {
-  "block.prism.copper_tap": "Copper Tap",
-  "item.prism.honeycomb_mold": "Honeycomb Mold",
-  "item.prism.honeycomb_mold.tooltip.summary": "Used for honeycomb compacting recipe",
-
   "itemGroup.prism.main": "Create: Prismatic Shine",
-
-  "prism.ponder.copper_tap.header": "Using Copper Taps",
-  "prism.ponder.copper_tap.text_1": "Copper Taps draw prism from containers behind them and can fill Cauldrons or Basins below",
-  "prism.ponder.copper_tap.text_2": "Copper Taps can be attached to leaves and infinitely output water from waterlogged leaves",
-  "prism.ponder.copper_tap.text_3": "Copper Taps can perform spout processing on Depots below",
-  "prism.ponder.copper_tap.text_4": "Redstone signals can be used to control the tap's on/off state",
 
   "block.prism.andesite_clear_glass_casing": "Andesite Clear Glass Casing",
   "block.prism.andesite_clear_glass_encased_cogwheel": "Andesite Clear Glass Encased Cogwheel",

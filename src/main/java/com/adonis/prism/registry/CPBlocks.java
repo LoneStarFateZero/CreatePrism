@@ -1,6 +1,5 @@
 package com.adonis.prism.registry;
 
-import com.adonis.prism.block.CopperTap.CopperTapBlock;
 import com.adonis.prism.block.glass.*;
 import com.adonis.prism.util.CasingTypes;
 import com.adonis.prism.util.GlassBlockList;
@@ -101,31 +100,6 @@ public class CPBlocks {
 
     public static final BlockEntry<MetalScaffoldingBlock> CLEAR_COPPER_GLASS_SCAFFOLD =
             glassScaffolding(REGISTRATE, "copper", true, MetalScaffoldingBlock::new);
-
-    // ========== Original Blocks ==========
-    public static final BlockEntry<CopperTapBlock> COPPER_TAP = REGISTRATE
-            .block("copper_tap", CopperTapBlock::new)
-            .initialProperties(SharedProperties::copperMetal)
-            .properties(prop -> prop
-                    .mapColor(MapColor.COLOR_ORANGE)
-                    .sound(SoundType.COPPER)
-                    .noOcclusion())
-            .transform(TagGen.axeOrPickaxe())
-            .blockstate((ctx, prov) -> {
-                prov.getVariantBuilder(ctx.get())
-                        .forAllStates(state -> {
-                            Direction dir = state.getValue(CopperTapBlock.FACING);
-                            int yRot = (int) dir.toYRot();
-                            return ConfiguredModel.builder()
-                                    .modelFile(prov.models().getExistingFile(prov.modLoc("block/copper_tap")))
-                                    .rotationY(yRot)
-                                    .build();
-                        });
-            })
-            .item()
-            .model((ctx, prov) -> prov.withExistingParent(ctx.getName(), prov.modLoc("block/copper_tap")))
-            .build()
-            .register();
 
     public static void register() {
         // Static initialization - forces all static fields to be initialized

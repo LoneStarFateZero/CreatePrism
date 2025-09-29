@@ -8,6 +8,10 @@
     "prism:andesite_glass_casing",
     "prism:brass_glass_casing",
     "prism:copper_glass_casing",
-    "prism:train_glass_casing"
+    "prism:train_glass_casing",
+    "prism:andesite_illumination_casing",
+    "prism:brass_illumination_casing",
+    "prism:copper_illumination_casing",
+    "prism:train_illumination_casing"
   ]
 }

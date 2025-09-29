@@ -12,7 +12,11 @@
     "prism:copper_glass_scaffolding",
     "prism:andesite_clear_glass_scaffolding",
     "prism:brass_clear_glass_scaffolding",
-    "prism:copper_clear_glass_scaffolding"
+    "prism:copper_clear_glass_scaffolding",
+    "prism:andesite_illumination_casing",
+    "prism:brass_illumination_casing",
+    "prism:copper_illumination_casing",
+    "prism:train_illumination_casing"
   ]
 }
 

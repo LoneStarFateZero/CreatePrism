@@ -1,7 +1,5 @@
 package com.adonis.prism.registry;
 
-import com.adonis.prism.block.CopperTap.CopperTapBlockEntity;
-import com.adonis.prism.block.CopperTap.CopperTapRenderer;
 import com.simibubi.create.AllPartialModels;
 import com.simibubi.create.content.kinetics.base.KineticBlockEntity;
 import com.simibubi.create.content.kinetics.base.ShaftRenderer;
@@ -15,13 +13,6 @@ import dev.engine_room.flywheel.lib.model.Models;
 import static com.adonis.prism.CreatePrism.REGISTRATE;
 
 public class CPBlockEntities {
-
-    // Copper Tap Block Entity
-    public static final BlockEntityEntry<CopperTapBlockEntity> COPPER_TAP = REGISTRATE
-            .blockEntity("copper_tap", CopperTapBlockEntity::new)
-            .validBlocks(CPBlocks.COPPER_TAP)
-            .renderer(() -> CopperTapRenderer::new)
-            .register();
 
     // Glass Encased Shaft Block Entity
     public static final BlockEntityEntry<KineticBlockEntity> GLASS_ENCASED_SHAFT = REGISTRATE
