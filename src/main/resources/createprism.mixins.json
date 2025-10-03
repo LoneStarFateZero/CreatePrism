@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "priority": 1000,
+  "package": "com.adonis.createprism.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "createprism.refmap.json",
+  "mixins": [
+  ],
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

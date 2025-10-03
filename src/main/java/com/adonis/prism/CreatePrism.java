@@ -17,7 +17,7 @@ import java.util.Random;
 
 @Mod(CreatePrism.MOD_ID)
 public class CreatePrism {
-    public static final String MOD_ID = "prism";
+    public static final String MOD_ID = "createprism";
     public static final String NAME = "Create Prism";
     public static final Random RANDOM = new Random();
 

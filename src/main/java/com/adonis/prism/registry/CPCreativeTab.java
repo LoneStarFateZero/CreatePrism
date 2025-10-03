@@ -15,7 +15,7 @@ public class CPCreativeTab {
 
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> MAIN_TAB = REGISTER.register("main",
             () -> CreativeModeTab.builder()
-                    .title(Component.translatable("itemGroup.prism.main"))
+                    .title(Component.translatable("itemGroup.createprism.main"))
                     .withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
                     .icon(() -> CPBlocks.ILLUMINATION_CASINGS.getCasing("brass").asItem().getDefaultInstance())
                     .displayItems((parameters, output) -> {

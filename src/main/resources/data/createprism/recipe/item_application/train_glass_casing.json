@@ -1,0 +1,16 @@
+{
+  "type": "create:item_application",
+  "ingredients": [
+    {
+      "item": "createprism:brass_glass_casing"
+    },
+    {
+      "tag": "c:plates/obsidian"
+    }
+  ],
+  "results": [
+    {
+      "id": "createprism:train_glass_casing"
+    }
+  ]
+}

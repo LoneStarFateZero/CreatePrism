@@ -1,7 +1,0 @@
-{
-  "parent": "prism:block/glass_encased_shaft/block",
-  "textures": {
-    "casing": "prism:block/andesite_illumination_casing",
-    "opening": "create:block/gearbox"
-  }
-}

@@ -1,9 +1,0 @@
-{
-  "parent": "prism:block/encased_cogwheel/item",
-  "textures": {
-    "backing": "prism:block/train_backing",
-    "casing": "prism:block/train_illumination_casing",
-    "opening": "prism:block/train_gearbox",
-    "siding": "prism:block/encased_cogwheels/large_train_encased_cogwheel_side"
-  }
-}

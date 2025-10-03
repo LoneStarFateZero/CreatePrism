@@ -1,0 +1,16 @@
+{
+  "type": "create:item_application",
+  "ingredients": [
+    {
+      "item": "createprism:train_clear_glass_casing"
+    },
+    {
+      "tag": "c:gems/prismarine"
+    }
+  ],
+  "results": [
+    {
+      "id": "createprism:train_illumination_casing"
+    }
+  ]
+}
