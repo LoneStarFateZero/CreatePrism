@@ -1,9 +1,9 @@
 {
   "required": true,
   "priority": 1000,
-  "package": "com.adonis.fluid.mixin",
+  "package": "com.adonis.prism.mixin",
   "compatibilityLevel": "JAVA_21",
-  "refmap": "fluid.refmap.json",
+  "refmap": "prism.refmap.json",
   "mixins": [
   ],
   "client": [
