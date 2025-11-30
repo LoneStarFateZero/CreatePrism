@@ -1,9 +1,9 @@
 {
   "parent": "createprism:block/encased_cogwheel/block",
   "textures": {
-    "backing": "minecraft:block/stripped_spruce_log_top",
+    "backing": "minecraft:block/stripped_dark_oak_log_top",
     "casing": "createprism:block/copper_glass_casing",
-    "opening": "create:block/gearbox",
+    "opening": "create:block/copper_gearbox",
     "particle": "createprism:block/copper_glass_casing",
     "siding": "createprism:block/encased_cogwheels/copper_encased_cogwheel_side"
   }
