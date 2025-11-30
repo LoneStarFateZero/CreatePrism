@@ -1,0 +1,7 @@
+{
+  "parent": "createprism:block/glass_encased_shaft/block",
+  "textures": {
+    "casing": "createprism:block/copper_illumination_casing",
+    "opening": "create:block/gearbox"
+  }
+}

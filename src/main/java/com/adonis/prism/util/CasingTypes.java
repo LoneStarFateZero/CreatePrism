@@ -9,6 +9,7 @@ import java.util.function.Supplier;
 
 public enum CasingTypes {
 
+    // 空置普通机壳
     NORMAL_CASINGS(
             createHolder("andesite", AllBlocks.ANDESITE_CASING),
             createHolder("brass", AllBlocks.BRASS_CASING),
@@ -16,18 +17,22 @@ public enum CasingTypes {
             createHolder("train", AllBlocks.RAILWAY_CASING)
     ),
 
+    // 脚手架
     SCAFFOLDING(
             createHolder("andesite", AllBlocks.ANDESITE_CASING),
             createHolder("brass", AllBlocks.BRASS_CASING),
             createHolder("copper", AllBlocks.COPPER_CASING)
     ),
 
+    // 装填普通机壳
     GENERAL_ENCASED(
             createHolder("andesite", AllBlocks.ANDESITE_CASING),
             createHolder("brass", AllBlocks.BRASS_CASING),
+            createHolder("copper", AllBlocks.COPPER_CASING),
             createHolder("train", AllBlocks.RAILWAY_CASING)
     ),
 
+    // 空置照明机壳
     ILLUMINATION_CASINGS(
             createHolder("andesite", AllBlocks.ANDESITE_CASING),
             createHolder("brass", AllBlocks.BRASS_CASING),
@@ -35,6 +40,7 @@ public enum CasingTypes {
             createHolder("train", AllBlocks.RAILWAY_CASING)
     ),
 
+    // 装填照明机壳
     ILLUMINATION_ENCASED(
             createHolder("andesite", AllBlocks.ANDESITE_CASING),
             createHolder("brass", AllBlocks.BRASS_CASING),
