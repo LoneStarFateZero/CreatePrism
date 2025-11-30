@@ -25,6 +25,7 @@ public enum CasingTypes {
     GENERAL_ENCASED(
             createHolder("andesite", AllBlocks.ANDESITE_CASING),
             createHolder("brass", AllBlocks.BRASS_CASING),
+            createHolder("copper", AllBlocks.COPPER_CASING),
             createHolder("train", AllBlocks.RAILWAY_CASING)
     ),
 
